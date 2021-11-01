@@ -27,19 +27,12 @@
  */
 
 
-// %Tag(FULLTEXT)%
-// %Tag(ROS_HEADER)%
-#include "ros/ros.h"
-// %EndTag(ROS_HEADER)%
-// %Tag(MSG_HEADER)%
-#include "std_msgs/String.h"
-// %EndTag(MSG_HEADER)%
 
+#include "ros/ros.h"
+#include "std_msgs/String.h"
 #include <sstream>
 
-/**
- * This tutorial demonstrates simple sending of messages over the ROS system.
- */
+
 int main(int argc, char **argv)
 {
   /**
@@ -106,13 +99,12 @@ int main(int argc, char **argv)
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "hello world " << count;
+    ss << "hello 808X terps !!! " << count;
     msg.data = ss.str();
 // %EndTag(FILL_MESSAGE)%
 
 // %Tag(ROSCONSOLE)%
     ROS_INFO("%s", msg.data.c_str());
-// %EndTag(ROSCONSOLE)%
 
     /**
      * The publish() function is how you send messages. The parameter
@@ -120,21 +112,13 @@ int main(int argc, char **argv)
      * given as a template parameter to the advertise<>() call, as was done
      * in the constructor above.
      */
-// %Tag(PUBLISH)%
+// Publishes the message
     chatter_pub.publish(msg);
-// %EndTag(PUBLISH)%
-
-// %Tag(SPINONCE)%
     ros::spinOnce();
-// %EndTag(SPINONCE)%
-
-// %Tag(RATE_SLEEP)%
     loop_rate.sleep();
-// %EndTag(RATE_SLEEP)%
     ++count;
   }
 
 
   return 0;
 }
-// %EndTag(FULLTEXT)%
