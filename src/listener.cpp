@@ -80,7 +80,7 @@ int main(int argc, char **argv)
    * away the oldest ones.
    */
 // %Tag(SUBSCRIBER)%
-  ros::Subscriber sub = n.subscribe("chatter", 1000, chatterCallback);
+  auto sub = n.subscribe("chatter", 1000, chatterCallback);
 // %EndTag(SUBSCRIBER)%
 
   /**
