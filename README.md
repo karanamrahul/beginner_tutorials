@@ -9,7 +9,6 @@
 
 2. [ROS Services and Logging example following the official ROS Tutorials](http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams)
 
-3. [ROS tf and bag files example following the official ROS Tutorials](http://wiki.ros.org/tf/Tutorials/Introduction%20to%20tf)
 
 
 ## Dependencies
