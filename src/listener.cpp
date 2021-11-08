@@ -32,17 +32,32 @@
 // %Tag(FULLTEXT)%
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/srv/AddTwoInts.srv"
 
 /**
- * This tutorial demonstrates simple receipt of messages over the ROS system.
+ * @brief This prints out the sum of two numbers
+ * @param[in] msg ; This is a variable which is given by the publisher.
+ * @return None
  */
-// %Tag(CALLBACK)%
+// 
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
-  ROS_INFO("I heard: [%s]", msg->data.c_str());
+   if (msg->data == "FATAL") {
+    ROS_FATAL_STREAM("I heard FATAL log message!!!");
+   } else if (msg->data == "ERROR") {
+    ROS_ERROR_STREAM("I heard ERROR log message!!!");
+   } else if (msg->data == "WARN") {
+    ROS_WARN_STREAM("I heard WARN log message!!!")
+   } else if (msg->data == "INFO") {
+    ROS_INFO_STREAM("I heard INFO log message!!!")
+   } else if (msg->data == "DEBUG") {
+    ROS_DEBUG_STREAM("I heard DEBUG log message!!!")
+  }
+
 }
 // %EndTag(CALLBACK)%
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -60,6 +75,7 @@ int main(int argc, char **argv) {
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
+  ROS_INFO_STREAM("Begin --> node listener !!")
   ros::NodeHandle n;
 
   /**
@@ -80,6 +96,17 @@ int main(int argc, char **argv) {
 // %Tag(SUBSCRIBER)%
   auto sub = n.subscribe("chatter", 1000, chatterCallback);
 // %EndTag(SUBSCRIBER)%
+  ros::ServiceClient client = n.serviceClient
+  <beginner_tutorials::AddTwoInts>("Adding two integers:");
+  beginner_tutorials::AddTwoInts srv;
+  srv.request.a = 10;
+  srv.request.b = 20;
+  if (client.call(srv)) {
+    ROS_INFO_STREAM("The sum of both the integers is : " << srv.response.sum);
+  } else {
+    ROS_ERROR_STREAM("Issue with the service !!!!");
+  }
+
 
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
