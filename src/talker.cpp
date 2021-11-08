@@ -40,10 +40,12 @@
  * @param[in] output - The output from adding the two integers.
  * @return bool
  */
-bool add(beginner_tutorials::AddTwoInts::Request &input, beginner_tutorials::AddTwoInts::Response &output) {
-  output.sum=input.a +input.b;
-  return true;
-} 
+bool add(beginner_tutorials::AddTwoInts::Request
+&required, beginner_tutorials::AddTwoInts::Response &result) {
+    result.sum = required.a + required.b;
+    return true;
+}
+
 int main(int argc, char **argv)
 {
   /**
@@ -68,9 +70,9 @@ int main(int argc, char **argv)
 // Getting param from the INFO logger level.
   ROS_INFO_STREAM("Begin Talker Node   !!!!");
   ros::NodeHandle node("~");
-  std::string params;
-  node.getParam("params",params);
-  ros::NodeHandle n;
+  std::string param;
+  node.getParam("param",param);
+  ros::NodeHandle talker;
 //
 
   /**
@@ -91,28 +93,30 @@ int main(int argc, char **argv)
    * buffer up before throwing some away.
    */
 // 
-  auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  ros::Publisher chatter_pub = talker.advertise<std_msgs::String>("chatter", 1000);
 // 
 
 // 
   ros::Rate loop_rate(10);
 // 
   // Displaying logger level message based upon the params
-  if (params == "FATAL") {
+  if (param == "fatal") {
     ROS_FATAL_STREAM("FATAL log message!!!");
-   } else if (params == "ERROR") {
+   } else if (param == "error") {
     ROS_ERROR_STREAM("ERROR log message!!!");
-   } else if (params == "WARN") {
+   } else if (param == "warn") {
     ROS_WARN_STREAM("WARN log message!!!");
-   } else if (params == "INFO") {
+   } else if (param == "info") {
     ROS_INFO_STREAM("INFO log message!!!");
-   } else if (params == "DEBUG") {
+   } else {
     ROS_DEBUG_STREAM("DEBUG log message!!!");
   }
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
+  ros::ServiceServer service = talker.advertiseService("Adding_two_integers", add);
+    ROS_INFO_STREAM("Service is ready .");
 // %Tag(ROS_OK)%
   int count = 0;
   while (ros::ok())
@@ -128,8 +132,8 @@ int main(int argc, char **argv)
     ROS_INFO_STREAM("Beginnning the log message in the loop");
 
     // Streaming the log level based upon the count
-  if (count%11 == 0) {
-            ss << "";
+    if (count%11 == 0) {
+            ss << "FATAL";
             ROS_FATAL_STREAM("FATAL Logger Level.");
         } else if (count%7 == 0) {
             ss << "ERROR";
@@ -152,8 +156,8 @@ int main(int argc, char **argv)
      * in the constructor above.
      */
 // Publishes the message
-    msg.data = ss.str();
     ++count;
+    msg.data = ss.str();
     chatter_pub.publish(msg);
     ros::spinOnce();
     loop_rate.sleep();
