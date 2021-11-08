@@ -28,12 +28,9 @@
  *
  *
  */
-
-// %Tag(FULLTEXT)%
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/AddTwoInts.h"
-
 /**
  * @brief This prints out the sum of two numbers
  * @param[in] msg ; This is a variable which is given by the publisher.
