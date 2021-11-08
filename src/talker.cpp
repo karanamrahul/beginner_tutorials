@@ -27,11 +27,25 @@
  */
 
 
-#include <sstream>
+
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/AddTwoInts.h"
+#include <sstream>
 
-int main(int argc, char **argv) {
+
+/**
+ * @brief This function adds two integers.
+ * @param[in] input - Requesting two inputs by the client.
+ * @param[in] output - The output from adding the two integers.
+ * @return bool
+ */
+bool add(beginner_tutorials::AddTwoInts::Request &input, beginner_tutorials::AddTwoInts::Response &output) {
+  output.sum=input.a +input.b;
+  return true;
+} 
+int main(int argc, char **argv)
+{
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -42,18 +56,22 @@ int main(int argc, char **argv) {
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
-// %Tag(INIT)%
+// 
   ros::init(argc, argv, "talker");
-// %EndTag(INIT)%
+// 
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
-// %Tag(NODEHANDLE)%
+// Getting param from the INFO logger level.
+  ROS_INFO_STREAM("Begin Talker Node   !!!!");
+  ros::NodeHandle node("~");
+  std::string params;
+  node.getParam("params",params);
   ros::NodeHandle n;
-// %EndTag(NODEHANDLE)%
+//
 
   /**
    * The advertise() function is how you tell ROS that you want to
@@ -72,21 +90,33 @@ int main(int argc, char **argv) {
    * than we can send them, the number here specifies how many messages to
    * buffer up before throwing some away.
    */
-// %Tag(PUBLISHER)%
+// 
   auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
-// %EndTag(PUBLISHER)%
+// 
 
-// %Tag(LOOP_RATE)%
+// 
   ros::Rate loop_rate(10);
-// %EndTag(LOOP_RATE)%
-
+// 
+  // Displaying logger level message based upon the params
+  if (params == "FATAL") {
+    ROS_FATAL_STREAM("FATAL log message!!!");
+   } else if (params == "ERROR") {
+    ROS_ERROR_STREAM("ERROR log message!!!");
+   } else if (params == "WARN") {
+    ROS_WARN_STREAM("WARN log message!!!");
+   } else if (params == "INFO") {
+    ROS_INFO_STREAM("INFO log message!!!");
+   } else if (params == "DEBUG") {
+    ROS_DEBUG_STREAM("DEBUG log message!!!");
+  }
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
 // %Tag(ROS_OK)%
-  auto count = 0;
-  while (ros::ok()) {
+  int count = 0;
+  while (ros::ok())
+  {
 // %EndTag(ROS_OK)%
     /**
      * This is a message object. You stuff it with data, and then publish it.
@@ -95,12 +125,25 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "hello 808X terps !!! " << count;
-    msg.data = ss.str();
-// %EndTag(FILL_MESSAGE)%
+    ROS_INFO_STREAM("Beginnning the log message in the loop");
 
-// %Tag(ROSCONSOLE)%
-    ROS_INFO("%s", msg.data.c_str());
+    // Streaming the log level based upon the count
+  if (count%11 == 0) {
+            ss << "";
+            ROS_FATAL_STREAM("FATAL Logger Level.");
+        } else if (count%7 == 0) {
+            ss << "ERROR";
+            ROS_ERROR_STREAM("ERROR Logger Level.");
+        } else if (count%6 == 0) {
+            ss << "WARN";
+            ROS_WARN_STREAM("WARN Logger Level.");
+        } else if (count%8 == 0) {
+            ss << "INFO";
+            ROS_INFO_STREAM("INFO Logger Level.");
+        } else {
+            ss << "DEBUG";
+            ROS_DEBUG_STREAM("DEBUG Logger Level.");
+        }
 
     /**
      * The publish() function is how you send messages. The parameter
@@ -109,10 +152,12 @@ int main(int argc, char **argv) {
      * in the constructor above.
      */
 // Publishes the message
+    msg.data = ss.str();
+    ++count;
     chatter_pub.publish(msg);
     ros::spinOnce();
     loop_rate.sleep();
-    ++count;
+    
   }
 
 
