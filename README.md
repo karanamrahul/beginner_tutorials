@@ -47,11 +47,11 @@ Open two terminals
 roscore
 ```
 
-#2
+#2 You can input the logger_level from these 5 levels fatal,error,warn,debug,info. i.e default is set to warn.
 ```
 cd catkin_ws
 source devel/setup.bash
-roslaunch beginner_tutorials beginner_tutorials.launch
+roslaunch beginner_tutorials beginner_tutorials.launch param:=<logger_level>
 ```
 
 
