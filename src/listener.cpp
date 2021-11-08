@@ -75,8 +75,8 @@ int main(int argc, char **argv)
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
-  ROS_INFO_STREAM("Begin --> node listener !!");
-  ros::NodeHandle n;
+  ROS_INFO_STREAM("Begin node listener");
+  ros::NodeHandle listener;
 
   /**
    * The subscribe() call is how you tell ROS that you want to receive messages
@@ -94,10 +94,10 @@ int main(int argc, char **argv)
    * away the oldest ones.
    */
 // %Tag(SUBSCRIBER)%
-  auto sub = n.subscribe("chatter", 1000, chatterCallback);
+  ros::Subscriber sub = listener.subscribe("chatter", 1000, chatterCallback);
 // %EndTag(SUBSCRIBER)%
-  ros::ServiceClient client = n.serviceClient
-  <beginner_tutorials::AddTwoInts>("Adding two integers:");
+  ros::ServiceClient client = listener.serviceClient
+  <beginner_tutorials::AddTwoInts>("Adding_two_integers");
   beginner_tutorials::AddTwoInts srv;
   srv.request.a = 10;
   srv.request.b = 20;
