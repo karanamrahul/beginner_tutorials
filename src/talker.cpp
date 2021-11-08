@@ -36,7 +36,7 @@
  * @param[in] output - The output from adding the two integers.
  * @return bool
  */
-bool add( beginner_tutorials::AddTwoInts::Request
+bool add(beginner_tutorials::AddTwoInts::Request
 &required, beginner_tutorials::AddTwoInts::Response &result) {
     result.sum = required.a + required.b;
     return true;
