@@ -32,7 +32,7 @@
 // %Tag(FULLTEXT)%
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "beginner_tutorials/srv/AddTwoInts.srv"
+#include "beginner_tutorials/AddTwoInts.h"
 
 /**
  * @brief This prints out the sum of two numbers
@@ -41,17 +41,17 @@
  */
 // 
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
-   if (msg->data == "FATAL") {
-    ROS_FATAL_STREAM("I heard FATAL log message!!!");
-   } else if (msg->data == "ERROR") {
-    ROS_ERROR_STREAM("I heard ERROR log message!!!");
-   } else if (msg->data == "WARN") {
-    ROS_WARN_STREAM("I heard WARN log message!!!")
-   } else if (msg->data == "INFO") {
-    ROS_INFO_STREAM("I heard INFO log message!!!")
-   } else if (msg->data == "DEBUG") {
-    ROS_DEBUG_STREAM("I heard DEBUG log message!!!")
-  }
+  if (msg->data == "FATAL") {
+        ROS_FATAL_STREAM("I heard FATAL log message!!!");
+   }  else if (msg->data == "ERROR") {
+        ROS_ERROR_STREAM("I heard ERROR log message!!!");
+   }  else if (msg->data == "WARN") {
+        ROS_WARN_STREAM("I heard WARN log message!!!");
+   }  else if (msg->data == "INFO") {
+        ROS_INFO_STREAM("I heard INFO log message!!!");
+   }  else if (msg->data == "DEBUG") {
+        ROS_DEBUG_STREAM("I heard DEBUG log message!!!");
+   }
 
 }
 // %EndTag(CALLBACK)%
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
-  ROS_INFO_STREAM("Begin --> node listener !!")
+  ROS_INFO_STREAM("Begin --> node listener !!");
   ros::NodeHandle n;
 
   /**
