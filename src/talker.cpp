@@ -25,10 +25,9 @@
  * @author     Rahul Karanam
  * @brief      This tutorial demonstrates simple sending of messages over the ROS system.
  */
-
+#include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include <sstream>
 #include "beginner_tutorials/AddTwoInts.h"
 
 /**
@@ -63,7 +62,7 @@ int main(int argc, char **argv) {
   ROS_INFO_STREAM("Begin Talker Node   !!!!");
   ros::NodeHandle node("~");
   std::string param;
-  node.getParam("param",param);
+  node.getParam("param", param);
   ros::NodeHandle talker;
   /**
    * The advertise() function is how you tell ROS that you want to
@@ -82,25 +81,27 @@ int main(int argc, char **argv) {
    * than we can send them, the number here specifies how many messages to
    * buffer up before throwing some away.
    */
-  ros::Publisher chatter_pub = talker.advertise<std_msgs::String>("chatter", 1000);
+  ros::Publisher chatter_pub =
+  talker.advertise<std_msgs::String>("chatter", 1000);
   ros::Rate loop_rate(10);
   // Displaying logger level message based upon the params
   if (param == "fatal") {
     ROS_FATAL_STREAM("FATAL log message!!!");
-   } else if (param == "error") {
+  } else if (param == "error") {
     ROS_ERROR_STREAM("ERROR log message!!!");
-   } else if (param == "warn") {
+  } else if (param == "warn") {
     ROS_WARN_STREAM("WARN log message!!!");
-   } else if (param == "info") {
+  } else if (param == "info") {
     ROS_INFO_STREAM("INFO log message!!!");
-   } else {
+  } else {
     ROS_DEBUG_STREAM("DEBUG log message!!!");
   }
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
-  ros::ServiceServer service = talker.advertiseService("Adding_two_integers", add);
+  ros::ServiceServer service =
+  talker.advertiseService("Adding_two_integers", add);
     ROS_INFO_STREAM("Service is ready .");
 // %Tag(ROS_OK)%
   int count = 0;
@@ -141,7 +142,7 @@ int main(int argc, char **argv) {
     msg.data = ss.str();
     chatter_pub.publish(msg);
     ros::spinOnce();
-    loop_rate.sleep();   
+    loop_rate.sleep();
   }
   return 0;
 }
