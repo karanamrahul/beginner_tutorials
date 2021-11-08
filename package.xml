@@ -2,7 +2,7 @@
 <package format="2">
   <name>beginner_tutorials</name>
   <version>0.1.0</version>
-  <description>ENPM808X ROS PART -1  Beginner_Tutorials Package</description>
+  <description>ENPM808X ROS PART -1 Beginner_Tutorials Package</description>
 
   <maintainer email="rkaranam@umd.edu">Rahul Karanam</maintainer>
 
@@ -43,11 +43,11 @@
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
-  <build_depend>message_generation</build_depend>
+  <!-- build_depend>message_generation</build_depend> -->
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-  <exec_depend>message_runtime</exec_depend>
+  <!-- exec_depend>message_runtime</exec_depend> -->
 
 
   <!-- The export tag contains other, unspecified, tags -->
