@@ -18,8 +18,12 @@ The following dependencies are required to run this package:
 1. ROS Noetic
 2. [catkin](http://wiki.ros.org/catkin#Installing_catkin)
 3. Ubuntu 20.04 For installing [ROS Noetic](http://wiki.ros.org/noetic/Installation)
+4. xterm
 
-ROS Publisher and Subscriber tutorial from the official ROS Tutorials
+# To install xterm
+```
+sudo apt install xterm
+```
 
 ## Standard install via command-line
 
@@ -37,22 +41,17 @@ catkin_make
 To run the listener and talker please run the below commands
 
 
-Open three terminals
+Open two terminals
 #1
 ```
 roscore
 ```
 
-#2
+#2 You can input the logger_level from these 5 levels fatal,error,warn,debug,info. i.e default is set to warn.
 ```
 cd catkin_ws
 source devel/setup.bash
-rosrun beginner_tutorials listener
+roslaunch beginner_tutorials beginner_tutorials.launch param:=<logger_level>
 ```
 
-#3  
-```
-cd catkin_ws
-source devel/setup.bash
-rosrun beginner_tutorials talker
-```
+
