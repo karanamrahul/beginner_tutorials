@@ -25,10 +25,15 @@
  * @author     Rahul Karanam
  * @brief      This tutorial demonstrates simple sending of messages over the ROS system.
  */
-#include <sstream>
+
+
+
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/AddTwoInts.h"
+#include <tf/transform_broadcaster.h>
+#include <sstream>
+
 
 /**
  * @brief This function adds two integers.
@@ -41,7 +46,9 @@ bool add(beginner_tutorials::AddTwoInts::Request
     result.sum = required.a + required.b;
     return true;
 }
-int main(int argc, char **argv) {
+
+int main(int argc, char **argv)
+{
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -52,7 +59,10 @@ int main(int argc, char **argv) {
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
+// 
   ros::init(argc, argv, "talker");
+// 
+
   /**
    * NodeHandle is the main access point to communications with the ROS system.
    * The first NodeHandle constructed will fully initialize this node, and the last
@@ -62,8 +72,11 @@ int main(int argc, char **argv) {
   ROS_INFO_STREAM("Begin Talker Node   !!!!");
   ros::NodeHandle node("~");
   std::string param;
-  node.getParam("param", param);
+  node.getParam("param",param);
   ros::NodeHandle talker;
+// Creating a broadcaster to broadcast tf frames to the world frame
+  tf::TransformBroadcaster br;
+  tf::Transform transform;
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -81,56 +94,63 @@ int main(int argc, char **argv) {
    * than we can send them, the number here specifies how many messages to
    * buffer up before throwing some away.
    */
-  ros::Publisher chatter_pub =
-  talker.advertise<std_msgs::String>("chatter", 1000);
+// 
+  ros::Publisher chatter_pub = talker.advertise<std_msgs::String>("chatter", 1000);
+// 
+
+// 
   ros::Rate loop_rate(10);
+// 
   // Displaying logger level message based upon the params
   if (param == "fatal") {
     ROS_FATAL_STREAM("FATAL log message!!!");
-  } else if (param == "error") {
+   } else if (param == "error") {
     ROS_ERROR_STREAM("ERROR log message!!!");
-  } else if (param == "warn") {
+   } else if (param == "warn") {
     ROS_WARN_STREAM("WARN log message!!!");
-  } else if (param == "info") {
+   } else if (param == "info") {
     ROS_INFO_STREAM("INFO log message!!!");
-  } else {
+   } else {
     ROS_DEBUG_STREAM("DEBUG log message!!!");
   }
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
-  ros::ServiceServer service =
-  talker.advertiseService("Adding_two_integers", add);
+  ros::ServiceServer service = talker.advertiseService("Adding_two_integers", add);
     ROS_INFO_STREAM("Service is ready .");
 // %Tag(ROS_OK)%
   int count = 0;
-  while (ros::ok()) {
+  while (ros::ok())
+  {
 // %EndTag(ROS_OK)%
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
 // %Tag(FILL_MESSAGE)%
     std_msgs::String msg;
+
     std::stringstream ss;
     ROS_INFO_STREAM("Beginnning the log message in the loop");
+
     // Streaming the log level based upon the count
     if (count%11 == 0) {
             ss << "FATAL";
             ROS_FATAL_STREAM("FATAL Logger Level.");
-       } else if (count%7 == 0) {
+        } else if (count%7 == 0) {
             ss << "ERROR";
             ROS_ERROR_STREAM("ERROR Logger Level.");
-       } else if (count%6 == 0) {
+        } else if (count%6 == 0) {
             ss << "WARN";
             ROS_WARN_STREAM("WARN Logger Level.");
-       } else if (count%8 == 0) {
+        } else if (count%8 == 0) {
             ss << "INFO";
             ROS_INFO_STREAM("INFO Logger Level.");
-       } else {
+        } else {
             ss << "DEBUG";
             ROS_DEBUG_STREAM("DEBUG Logger Level.");
         }
+
     /**
      * The publish() function is how you send messages. The parameter
      * is the message object. The type of this object must agree with the type
@@ -141,8 +161,17 @@ int main(int argc, char **argv) {
     ++count;
     msg.data = ss.str();
     chatter_pub.publish(msg);
+    transform.setOrigin( tf::Vector3(0.0, 2.0, 0.0) );
+    tf::Quaternion q;
+  q.setRPY(0, 0, 1);
+  transform.setRotation(q);
+  br.sendTransform(tf::StampedTransform(transform,
+   ros::Time::now(), "world", "testudo"));
     ros::spinOnce();
     loop_rate.sleep();
+    
   }
+
+
   return 0;
 }
