@@ -53,5 +53,9 @@ cd catkin_ws
 source devel/setup.bash
 roslaunch beginner_tutorials beginner_tutorials.launch param:=<logger_level>
 ```
+#3 To view tf frames we need to use tf2_tools viewframes 
+```
+rosrun tf2_tools view_frames.py
 
+```
 
