@@ -1,5 +1,6 @@
 <launch>
-    <arg name="param" default="warn"/>
+    <arg name="param" default="info"/>
+    <arg name="record" default="false"/>
     <node
         pkg="beginner_tutorials"
         type="talker"
@@ -13,5 +14,13 @@
         type="listener"
         name="listener"
         launch-prefix="xterm -e"
+    />
+
+    <node 
+        pkg="rosbag"
+        name="record"
+        type="record"
+        args="--duration=15 -a -O $(find beginner_tutorials)/results/record_data.bag" 
+        if="$(arg record)"
     />
 </launch>
