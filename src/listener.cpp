@@ -28,28 +28,36 @@
  *
  *
  */
+
+// %Tag(FULLTEXT)%
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/AddTwoInts.h"
+
 /**
  * @brief This prints out the sum of two numbers
  * @param[in] msg ; This is a variable which is given by the publisher.
  * @return None
  */
+// 
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
   if (msg->data == "FATAL") {
-      ROS_FATAL_STREAM("I heard FATAL log message!!!");
-  }  else if (msg->data == "ERROR") {
-      ROS_ERROR_STREAM("I heard ERROR log message!!!");
-  }  else if (msg->data == "WARN") {
-      ROS_WARN_STREAM("I heard WARN log message!!!");
-  }  else if (msg->data == "INFO") {
-      ROS_INFO_STREAM("I heard INFO log message!!!");
-  }  else if (msg->data == "DEBUG") {
-      ROS_DEBUG_STREAM("I heard DEBUG log message!!!");
-  }
+        ROS_FATAL_STREAM("I heard FATAL log message!!!");
+   }  else if (msg->data == "ERROR") {
+        ROS_ERROR_STREAM("I heard ERROR log message!!!");
+   }  else if (msg->data == "WARN") {
+        ROS_WARN_STREAM("I heard WARN log message!!!");
+   }  else if (msg->data == "INFO") {
+        ROS_INFO_STREAM("I heard INFO log message!!!");
+   }  else if (msg->data == "DEBUG") {
+        ROS_DEBUG_STREAM("I heard DEBUG log message!!!");
+   }
+
 }
-int main(int argc, char **argv) {
+// %EndTag(CALLBACK)%
+
+int main(int argc, char **argv)
+{
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -61,6 +69,7 @@ int main(int argc, char **argv) {
    * part of the ROS system.
    */
   ros::init(argc, argv, "listener");
+
   /**
    * NodeHandle is the main access point to communications with the ROS system.
    * The first NodeHandle constructed will fully initialize this node, and the last
@@ -68,6 +77,7 @@ int main(int argc, char **argv) {
    */
   ROS_INFO_STREAM("Begin node listener");
   ros::NodeHandle listener;
+
   /**
    * The subscribe() call is how you tell ROS that you want to receive messages
    * on a given topic.  This invokes a call to the ROS
@@ -84,7 +94,7 @@ int main(int argc, char **argv) {
    * away the oldest ones.
    */
 // %Tag(SUBSCRIBER)%
-  ros::Subscriber sub = listener.subscribe("chatter", 1000, chatterCallback);
+  auto sub = listener.subscribe("chatter", 1000, chatterCallback);
 // %EndTag(SUBSCRIBER)%
   ros::ServiceClient client = listener.serviceClient
   <beginner_tutorials::AddTwoInts>("Adding_two_integers");
@@ -96,6 +106,8 @@ int main(int argc, char **argv) {
   } else {
     ROS_ERROR_STREAM("Issue with the service !!!!");
   }
+
+
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
    * callbacks will be called from within this thread (the main one).  ros::spin()
@@ -104,6 +116,7 @@ int main(int argc, char **argv) {
 // %Tag(SPIN)%
   ros::spin();
 // %EndTag(SPIN)%
+
   return 0;
 }
 // %EndTag(FULLTEXT)%

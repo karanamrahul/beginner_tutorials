@@ -41,7 +41,7 @@
  * @param[in] output - The output from adding the two integers.
  * @return bool
  */
-bool add(beginner_tutorials::AddTwoInts::Request
+bool AddTwoInts(beginner_tutorials::AddTwoInts::Request
 &required, beginner_tutorials::AddTwoInts::Response &result) {
     result.sum = required.a + required.b;
     return true;
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
    * buffer up before throwing some away.
    */
 // 
-  ros::Publisher chatter_pub = talker.advertise<std_msgs::String>("chatter", 1000);
+  auto chatter_pub = talker.advertise<std_msgs::String>("chatter", 1000);
 // 
 
 // 
@@ -117,7 +117,7 @@ int main(int argc, char **argv)
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
-  ros::ServiceServer service = talker.advertiseService("Adding_two_integers", add);
+  auto service = talker.advertiseService("Adding_two_integers", AddTwoInts);
     ROS_INFO_STREAM("Service is ready .");
 // %Tag(ROS_OK)%
   int count = 0;
@@ -134,16 +134,16 @@ int main(int argc, char **argv)
     ROS_INFO_STREAM("Beginnning the log message in the loop");
 
     // Streaming the log level based upon the count
-    if (count%11 == 0) {
+    if (count%33 == 0) {
             ss << "FATAL";
             ROS_FATAL_STREAM("FATAL Logger Level.");
-        } else if (count%7 == 0) {
+        } else if (count%11 == 0) {
             ss << "ERROR";
             ROS_ERROR_STREAM("ERROR Logger Level.");
-        } else if (count%6 == 0) {
+        } else if (count%7 == 0) {
             ss << "WARN";
             ROS_WARN_STREAM("WARN Logger Level.");
-        } else if (count%8 == 0) {
+        } else if (count%3 == 0) {
             ss << "INFO";
             ROS_INFO_STREAM("INFO Logger Level.");
         } else {
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
     chatter_pub.publish(msg);
     transform.setOrigin( tf::Vector3(0.0, 2.0, 0.0) );
     tf::Quaternion q;
-  q.setRPY(0, 0, 1);
+  q.setRPY(0, 0, 30);
   transform.setRotation(q);
   br.sendTransform(tf::StampedTransform(transform,
    ros::Time::now(), "world", "testudo"));
