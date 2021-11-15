@@ -1,0 +1,167 @@
+!\mbox{[}Packagist\mbox{]}(https\+://img.shields.io/packagist/l/doctrine/orm.svg)\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Overview of the project}\label{md__r_e_a_d_m_e_autotoc_md1}
+
+\begin{DoxyEnumerate}
+\item \href{http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber\%28c\%2B\%2B\%29}{\texttt{ R\+OS Publisher/\+Subsciber example following the official R\+OS Tutorials}}
+\item \href{http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams}{\texttt{ R\+OS Services and Logging example following the official R\+OS Tutorials}}
+\item \href{http://wiki.ros.org/ROS/Tutorials/Recording\%20and\%20playing\%20back\%20data}{\texttt{ R\+OS Recording Bags,tf frames and rostest following the official Tutorilals}}
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Dependencies}\label{md__r_e_a_d_m_e_autotoc_md2}
+The following dependencies are required to run this package\+:
+
+
+\begin{DoxyEnumerate}
+\item R\+OS Noetic
+\item \href{http://wiki.ros.org/catkin\#Installing_catkin}{\texttt{ catkin}}
+\item Ubuntu 20.\+04 For installing \href{http://wiki.ros.org/noetic/Installation}{\texttt{ R\+OS Noetic}}
+\item xterm
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{To install xterm}\label{md__r_e_a_d_m_e_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo apt install xterm}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{Standard install via command-\/line}\label{md__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd \string~/catkin\_ws/src}
+\DoxyCodeLine{mkdir beginner\_tutorials}
+\DoxyCodeLine{cd beginner\_tutorials}
+\DoxyCodeLine{git clone -\/-\/recursive https://github.com/karanamrahul/beginner\_tutorials}
+\DoxyCodeLine{cd ../..}
+\DoxyCodeLine{catkin\_make}
+\end{DoxyCode}
+
+
+To run the listener and talker please run the below commands
+
+Open two terminals \#1 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{roscore}
+\end{DoxyCode}
+
+
+\#2 You can input the logger\+\_\+level from these 5 levels fatal,error,warn,debug,info. i.\+e default is set to info. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{roslaunch beginner\_tutorials beginner\_tutorials.launch param:=<logger\_level>}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysection{Testing using rostest and gtest demo}\label{md__r_e_a_d_m_e_autotoc_md5}
+\#1 Terminal -\/ To launch the test.\+launch using roslaunch
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{roslaunch beginner\_tutorials test.launch}
+\end{DoxyCode}
+
+
+\#2 Terminal To view the test results 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{rostest beginner\_tutorials test.launch}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{Test Output}\label{md__r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ubu@ubu-\/QEMU-\/Virtual-\/Machine:\string~/catkin\_ws\$ rostest beginner\_tutorials test.launch }
+\DoxyCodeLine{... logging to /home/ubu/.ros/log/rostest-\/ubu-\/QEMU-\/Virtual-\/Machine-\/26247.log}
+\DoxyCodeLine{[ROSUNIT] Outputting test results to /home/ubu/.ros/test\_results/beginner\_tutorials/rostest-\/test\_test.xml}
+\DoxyCodeLine{[FATAL] [1636935346.041828165]: FATAL Logger Level.}
+\DoxyCodeLine{[Testcase: testtest\_pub] ... ok}
+\DoxyCodeLine{}
+\DoxyCodeLine{[ROSTEST]-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{}
+\DoxyCodeLine{[beginner\_tutorials.rosunit-\/test\_pub/testpubName][passed]}
+\DoxyCodeLine{[beginner\_tutorials.rosunit-\/test\_pub/testServiceOut][passed]}
+\DoxyCodeLine{[beginner\_tutorials.rosunit-\/test\_pub/checkmaster][passed]}
+\DoxyCodeLine{}
+\DoxyCodeLine{SUMMARY}
+\DoxyCodeLine{ * RESULT: SUCCESS}
+\DoxyCodeLine{ * TESTS: 3}
+\DoxyCodeLine{ * ERRORS: 0}
+\DoxyCodeLine{ * FAILURES: 0}
+\DoxyCodeLine{}
+\DoxyCodeLine{rostest log file is in /home/ubu/.ros/log/rostest-\/ubu-\/QEMU-\/Virtual-\/Machine-\/26247.log}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysection{Bag recording and inspecting the T\+F frames demo}\label{md__r_e_a_d_m_e_autotoc_md7}
+\#1 Terminal 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{roscore}
+\end{DoxyCode}
+
+
+\#2 Terminal -\/ We are recording our data with the warn logger level which will store the talker data in record\+\_\+data.\+bag
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{roslaunch beginner\_tutorials beginner\_tutorials.launch param:=warn record:=true}
+\end{DoxyCode}
+
+
+\#3 To view tf frames we need to use tf2\+\_\+tools viewframes -\/ frames.\+pdf is generated for the record\+\_\+data.\+bag
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{rosrun tf2\_tools view\_frames.py}
+\DoxyCodeLine{|or|}
+\DoxyCodeLine{rosrun rqt\_tf\_tree rqt\_tf\_tree}
+\DoxyCodeLine{-\/-\/> to open the frames.pdf in cmd}
+\DoxyCodeLine{evince frames.pdf}
+\end{DoxyCode}
+
+
+\#4 To view the bag recording info 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{cd src/beginner\_tutorials/results/record\_data.bag}
+\DoxyCodeLine{rosbag info record\_data.bag}
+\end{DoxyCode}
+
+
+\#\+Output 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ros info record\_data.bag }
+\DoxyCodeLine{path:        record\_data.bag}
+\DoxyCodeLine{version:     2.0}
+\DoxyCodeLine{duration:    14.7s}
+\DoxyCodeLine{start:       Nov 14 2021 14:35:40.61 (1636918540.61)}
+\DoxyCodeLine{end:         Nov 14 2021 14:35:55.32 (1636918555.32)}
+\DoxyCodeLine{size:        169.6 KB}
+\DoxyCodeLine{messages:    821}
+\DoxyCodeLine{compression: none [1/1 chunks]}
+\DoxyCodeLine{types:       rosgraph\_msgs/Log  [acffd30cd6b6de30f120938c17c593fb]}
+\DoxyCodeLine{             std\_msgs/String    [992ce8a1687cec8c8bd883ec73ca41d1]}
+\DoxyCodeLine{             tf2\_msgs/TFMessage [94810edda583a504dfda3829e70d7eec]}
+\DoxyCodeLine{topics:      /chatter      139 msgs    : std\_msgs/String   }
+\DoxyCodeLine{             /rosout       271 msgs    : rosgraph\_msgs/Log  (3 connections)}
+\DoxyCodeLine{             /rosout\_agg   272 msgs    : rosgraph\_msgs/Log }
+\DoxyCodeLine{             /tf           139 msgs    : tf2\_msgs/TFMessage}
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysection{Listener node demo from recorded bag}\label{md__r_e_a_d_m_e_autotoc_md8}
+\#1 Terminal 1 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{roscore}
+\end{DoxyCode}
+
+
+\#2 Terminal 2 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{rosbag play src/beginner\_tutorials/results/record\_data.bag}
+\end{DoxyCode}
+
+
+\#3 Terminal 3 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{rosrun beginner\_tutorials listener}
+\end{DoxyCode}
+ 
