@@ -1,3 +1,10 @@
-ubu@ubu-QEMU-Virtual-Machine:~/Pictures/beginner_tutorials/src$ cpplint listener.cpp talker.cpp 
+ubu@ubu-QEMU-Virtual-Machine:~/Pictures/beginner_tutorials/src$ cpplint talker.cpp listener.cpp 
 Done processing listener.cpp
+talker.cpp:41:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::AddTwoInts::Response &result  [runtime/references] [2]
 Done processing talker.cpp
+Total errors found: 1
+
+ubu@ubu-QEMU-Virtual-Machine:~/Pictures/beginner_tutorials/test$ cpplint main.cpp test_pub.cpp 
+Done processing main.cpp
+Done processing test_pub.cpp
+
