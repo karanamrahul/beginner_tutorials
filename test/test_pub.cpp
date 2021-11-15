@@ -64,5 +64,5 @@ TEST(testTalkerNode, testServiceOut) {
   EXPECT_EQ(5, srv.response.sum);
 }
   TEST(testTalkerNode,checkmaster) {
-    EXPECT_TRUE(ros::master::check())
+    EXPECT_TRUE(ros::master::check());
   }
